@@ -1,3 +1,5 @@
+## Instructions
+
 1.  Set Up Google Custom Search API
 - Create a Google Custom Search Engine (CSE):
 
@@ -28,3 +30,12 @@ API_KEY=your_google_api_key
 CSE_ID=your_google_cse_id
 ```
 4. Run the `google.py` script modifying the `query` variable to search for the `websites_to_exclude` and/or `websites_to_include` variables.
+
+## Query example:
+
+```python
+Generative AI OR Generative Artificial Intelligence OR Generative Model OR Large Language Model
+    OR Language Model OR Small Language Model OR LLM OR RAG OR Retrieval Augmented Generation
+    OR Natural Language Processing OR NLP OR AI Agent OR AI Multi-Agent
+     "debugging" after:2021 -site:youtube.com -site:github.com -site:paperswithcode.com
+```
