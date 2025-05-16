@@ -7,6 +7,7 @@ load_dotenv()
 
 API_KEY = os.getenv('API_KEY')
 CSE_ID = os.getenv('CSE_ID')
+NUM_RESULTS = 30
 
 def exclude_website(website):
     return f"-site:{website}"
@@ -71,7 +72,7 @@ def get_google_results():
             query += " " + exclude_website(website)
 
         print("query:", query)
-        search_results = google_search(query, API_KEY, CSE_ID, num_results=10)
+        search_results = google_search(query, API_KEY, CSE_ID, NUM_RESULTS)
         if not search_results:
             print("No results found for this query.")
             continue
@@ -88,7 +89,7 @@ def get_github_results():
         query += " " + include_website("github.com")
 
         print("query:", query)
-        search_results = google_search(query, API_KEY, CSE_ID, num_results=10)
+        search_results = google_search(query, API_KEY, CSE_ID, NUM_RESULTS)
         if not search_results:
             print("No results found for this query.")
             continue
@@ -105,7 +106,7 @@ def get_pwc_results():
         query += " " + include_website("paperswithcode.com")
 
         print("query:", query)
-        search_results = google_search(query, API_KEY, CSE_ID, num_results=10)
+        search_results = google_search(query, API_KEY, CSE_ID, NUM_RESULTS)
         if not search_results:
             print("No results found for this query.")
             continue
@@ -140,5 +141,13 @@ if __name__ == "__main__":
     pwc_df = merge_dataframes_in_directory('./pwc_results')
 
     google_df.to_csv('./final_results/merged_google_results.csv', index=False)
+    google_df.drop_duplicates(subset='link', inplace=True)
+    google_df.to_csv('./final_results/merged_google_results_cleaned.csv', index=False)
+
     github_df.to_csv('./final_results/merged_github_results.csv', index=False)
+    github_df.drop_duplicates(subset='link', inplace=True)
+    github_df.to_csv('./final_results/merged_github_results_cleaned.csv', index=False)
+
     pwc_df.to_csv('./final_results/merged_pwc_results.csv', index=False)
+    pwc_df.drop_duplicates(subset='link', inplace=True)
+    pwc_df.to_csv('./final_results/merged_pwc_results_cleaned.csv', index=False)
