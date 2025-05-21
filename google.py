@@ -7,7 +7,15 @@ load_dotenv()
 
 API_KEY = os.getenv('API_KEY')
 CSE_ID = os.getenv('CSE_ID')
-NUM_RESULTS = 30
+NUM_RESULTS = 100
+
+population_query = """
+    "test" OR "quality" OR "validation" OR "verification" OR "technical debt" OR "defect detection" OR "software inspection" OR "model checking" OR "debugging" OR "code review"
+    """
+
+intervention_query = """
+    "Generative AI" OR "Generative Model" OR "Large Language Model" OR "Retrieval Augmented Generation" OR "NLP"  OR "Machine Learning"
+    """
 
 def exclude_website(website):
     return f"-site:{website}"
@@ -42,112 +50,63 @@ def google_search(query, api_key, cse_id, num_results):
 
     return results
 
-population = [
-    'test',
-    'quality',
-    'validation',
-    'verification',
-    'technical debt',
-    'defect detection',
-    'software inspection',
-    'model checking',
-    'debugging',
-    'code review'
-]
-
-intervention_query = """
-    Generative AI OR Generative Artificial Intelligence OR Generative Model OR Large Language Model
-    OR Language Model OR Small Language Model OR LLM OR RAG OR Retrieval Augmented Generation
-    OR Natural Language Processing OR NLP OR AI Agent OR AI Multi-Agent
-    """
-
 def get_google_results():
     websites_to_exclude = [
-        'youtube.com', 'github.com', 'paperswithcode.com'
+        'youtube.com',
+        'github.com',
+        'paperswithcode.com'
     ]
 
-    for pop in population:
-        query = f"{intervention_query} \"{pop}\" after:2021"
-        for website in websites_to_exclude:
-            query += " " + exclude_website(website)
+    query = f"({population_query}) AND ({intervention_query}) after:2021"
 
-        print("query:", query)
-        search_results = google_search(query, API_KEY, CSE_ID, NUM_RESULTS)
-        if not search_results:
-            print("No results found for this query.")
-            continue
-        pop_df = pd.DataFrame(search_results)
+    for website in websites_to_exclude:
+        query += " " + exclude_website(website)
 
-        pop_df.to_csv(f"./google_results/google_results_{pop}.csv", index=False)
-        print(f"Results for {pop} saved to google_results_{pop}.csv")
-        print("==================")
+    print("query:", query)
+
+    search_results = google_search(query, API_KEY, CSE_ID, NUM_RESULTS)
+    if not search_results:
+        print("No results found for this query.")
+        return
+    pop_df = pd.DataFrame(search_results)
+    pop_df.to_csv(f"./google_results/google_results.csv", index=False)
+    print(f"Results saved to google_results.csv")
 
 def get_github_results():
-    for pop in population:
-        query = f"{intervention_query} \"{pop}\" after:2021"
+    query = f"({population_query}) AND ({intervention_query}) after:2021"
 
-        query += " " + include_website("github.com")
+    query += " " + include_website("github.com")
 
-        print("query:", query)
-        search_results = google_search(query, API_KEY, CSE_ID, NUM_RESULTS)
-        if not search_results:
-            print("No results found for this query.")
-            continue
-        pop_df = pd.DataFrame(search_results)
+    print("query:", query)
 
-        pop_df.to_csv(f"./github_results/github_results_{pop}.csv", index=False)
-        print(f"Results for {pop} saved to github_results_{pop}.csv")
-        print("==================")
+    search_results = google_search(query, API_KEY, CSE_ID, NUM_RESULTS)
+    if not search_results:
+        print("No results found for this query.")
+        return
+    pop_df = pd.DataFrame(search_results)
+    pop_df.to_csv(f"./github_results/github_results.csv", index=False)
+    print(f"Results saved to github_results.csv")
 
 def get_pwc_results():
-    for pop in population:
-        query = f"{intervention_query} \"{pop}\" after:2021"
+    query = f"({population_query}) AND ({intervention_query}) after:2021"
 
-        query += " " + include_website("paperswithcode.com")
+    query += " " + include_website("paperswithcode.com")
 
-        print("query:", query)
-        search_results = google_search(query, API_KEY, CSE_ID, NUM_RESULTS)
-        if not search_results:
-            print("No results found for this query.")
-            continue
-        pop_df = pd.DataFrame(search_results)
+    print("query:", query)
 
-        pop_df.to_csv(f"./pwc_results/pwc_results_{pop}.csv", index=False)
-        print(f"Results for {pop} saved to pwc_results_{pop}.csv")
-        print("==================")
-
-def merge_dataframes_in_directory(directory):
-    all_dataframes = []
-    for filename in os.listdir(directory):
-        if filename.endswith('.csv'):
-            filepath = os.path.join(directory, filename)
-            df = pd.read_csv(filepath)
-            all_dataframes.append(df)
-    merged_df = pd.concat(all_dataframes, ignore_index=True)
-    return merged_df
+    search_results = google_search(query, API_KEY, CSE_ID, NUM_RESULTS)
+    if not search_results:
+        print("No results found for this query.")
+        return
+    pop_df = pd.DataFrame(search_results)
+    pop_df.to_csv(f"./pwc_results/pwc_results.csv", index=False)
+    print(f"Results saved to pwc_results.csv")
 
 if __name__ == "__main__":
     os.makedirs('./google_results', exist_ok=True)
     os.makedirs('./github_results', exist_ok=True)
     os.makedirs('./pwc_results', exist_ok=True)
-    os.makedirs('./final_results', exist_ok=True)
 
     get_google_results()
     get_github_results()
     get_pwc_results()
-
-    google_df = merge_dataframes_in_directory('./google_results')
-    github_df = merge_dataframes_in_directory('./github_results')
-    pwc_df = merge_dataframes_in_directory('./pwc_results')
-
-    google_df.to_csv('./final_results/merged_google_results.csv', index=False)
-    google_df.drop_duplicates(subset='link', inplace=True)
-    google_df.to_csv('./final_results/merged_google_results_cleaned.csv', index=False)
-
-    github_df.to_csv('./final_results/merged_github_results.csv', index=False)
-    github_df.drop_duplicates(subset='link', inplace=True)
-    github_df.to_csv('./final_results/merged_github_results_cleaned.csv', index=False)
-
-    pwc_df.to_csv('./final_results/merged_pwc_results.csv', index=False)
-    pwc_df.drop_duplicates(subset='link', inplace=True)
-    pwc_df.to_csv('./final_results/merged_pwc_results_cleaned.csv', index=False)
