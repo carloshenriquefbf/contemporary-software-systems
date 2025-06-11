@@ -9,6 +9,10 @@ API_KEY = os.getenv('API_KEY')
 CSE_ID = os.getenv('CSE_ID')
 NUM_RESULTS = 100
 
+context_query = """
+    "software engineering"
+"""
+
 population_query = """
     "test" OR "quality" OR "validation" OR "verification" OR "technical debt" OR "defect detection" OR "software inspection" OR "model checking" OR "debugging" OR "code review"
     """
@@ -57,7 +61,7 @@ def get_google_results():
         'paperswithcode.com'
     ]
 
-    query = f"({population_query}) AND ({intervention_query}) after:2021"
+    query = f"{context_query} AND ({population_query}) AND ({intervention_query}) after:2021"
 
     for website in websites_to_exclude:
         query += " " + exclude_website(website)
@@ -73,7 +77,7 @@ def get_google_results():
     print(f"Results saved to google_results.csv")
 
 def get_github_results():
-    query = f"({population_query}) AND ({intervention_query}) after:2021"
+    query = f"{context_query} AND ({population_query}) AND ({intervention_query}) after:2021"
 
     query += " " + include_website("github.com")
 
@@ -88,9 +92,9 @@ def get_github_results():
     print(f"Results saved to github_results.csv")
 
 def get_pwc_results():
-    query = f"({population_query}) AND ({intervention_query}) after:2021"
+    query = f"{context_query} AND ({population_query}) AND ({intervention_query}) after:2021"
 
-    query += " " + include_website("paperswithcode.com")
+    query += " " + include_website("paperswithcode.com/paper")
 
     print("query:", query)
 
