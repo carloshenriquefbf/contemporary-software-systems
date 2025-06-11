@@ -35,23 +35,26 @@
 
 ```python
     # google
-    (
-    "test" OR "quality" OR "validation" OR "verification" OR "technical debt" OR "defect detection" OR "software inspection" OR "model checking" OR "debugging" OR "code review"
+    "software engineering"
+    AND (
+        "test" OR "quality" OR "validation" OR "verification" OR "technical debt" OR "defect detection" OR "software inspection" OR "model checking" OR "debugging" OR "code review"
     ) AND (
-    "Generative AI" OR "Generative Model" OR "Large Language Model" OR "Retrieval Augmented Generation" OR "NLP"  OR "Machine Learning"
+        "Generative AI" OR "Generative Model" OR "Large Language Model" OR "Retrieval Augmented Generation" OR "NLP"  OR "Machine Learning"
     ) after:2021 -site:youtube.com -site:github.com -site:paperswithcode.com
 
     # github
-    (
-    "test" OR "quality" OR "validation" OR "verification" OR "technical debt" OR "defect detection" OR "software inspection" OR "model checking" OR "debugging" OR "code review"
+    "software engineering"
+    AND (
+        "test" OR "quality" OR "validation" OR "verification" OR "technical debt" OR "defect detection" OR "software inspection" OR "model checking" OR "debugging" OR "code review"
     ) AND (
-    "Generative AI" OR "Generative Model" OR "Large Language Model" OR "Retrieval Augmented Generation" OR "NLP"  OR "Machine Learning"
+        "Generative AI" OR "Generative Model" OR "Large Language Model" OR "Retrieval Augmented Generation" OR "NLP"  OR "Machine Learning"
     ) after:2021 site:github.com
 
     # papers with code
-    (
-    "test" OR "quality" OR "validation" OR "verification" OR "technical debt" OR "defect detection" OR "software inspection" OR "model checking" OR "debugging" OR "code review"
+    "software engineering"
+    AND (
+        "test" OR "quality" OR "validation" OR "verification" OR "technical debt" OR "defect detection" OR "software inspection" OR "model checking" OR "debugging" OR "code review"
     ) AND (
-    "Generative AI" OR "Generative Model" OR "Large Language Model" OR "Retrieval Augmented Generation" OR "NLP"  OR "Machine Learning"
-    ) after:2021 site:paperswithcode.com
+        "Generative AI" OR "Generative Model" OR "Large Language Model" OR "Retrieval Augmented Generation" OR "NLP"  OR "Machine Learning"
+    ) after:2021 site:paperswithcode.com/paper
 ```
