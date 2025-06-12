@@ -37,24 +37,24 @@
     # google
     "software engineering"
     AND (
-        "test" OR "quality" OR "validation" OR "verification" OR "technical debt" OR "defect detection" OR "software inspection" OR "model checking" OR "debugging" OR "code review"
+        "test" OR "quality" OR "validation" OR "verification" OR "technical debt" OR "defect detection" OR "software inspection" OR "model checking" OR "debug" OR "code review"
     ) AND (
-        "Generative AI" OR "Generative Model" OR "Large Language Model" OR "Retrieval Augmented Generation" OR "NLP"  OR "Machine Learning"
+        "Generative AI" OR "Generative Artificial Intelligence"  OR "Large Language Model"  OR "LLM"
     ) after:2021 -site:youtube.com -site:github.com -site:paperswithcode.com
 
     # github
     "software engineering"
     AND (
-        "test" OR "quality" OR "validation" OR "verification" OR "technical debt" OR "defect detection" OR "software inspection" OR "model checking" OR "debugging" OR "code review"
+        "test" OR "quality" OR "validation" OR "verification" OR "technical debt" OR "defect detection" OR "software inspection" OR "model checking" OR "debug" OR "code review"
     ) AND (
-        "Generative AI" OR "Generative Model" OR "Large Language Model" OR "Retrieval Augmented Generation" OR "NLP"  OR "Machine Learning"
+        "Generative AI" OR "Generative Artificial Intelligence"  OR "Large Language Model"  OR "LLM"
     ) after:2021 site:github.com
 
     # papers with code
     "software engineering"
     AND (
-        "test" OR "quality" OR "validation" OR "verification" OR "technical debt" OR "defect detection" OR "software inspection" OR "model checking" OR "debugging" OR "code review"
+        "test" OR "quality" OR "validation" OR "verification" OR "technical debt" OR "defect detection" OR "software inspection" OR "model checking" OR "debug" OR "code review"
     ) AND (
-        "Generative AI" OR "Generative Model" OR "Large Language Model" OR "Retrieval Augmented Generation" OR "NLP"  OR "Machine Learning"
+        "Generative AI" OR "Generative Artificial Intelligence"  OR "Large Language Model"  OR "LLM"
     ) after:2021 site:paperswithcode.com/paper
 ```
